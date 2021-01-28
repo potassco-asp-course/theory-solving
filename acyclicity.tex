@@ -1,0 +1,25 @@
+% ----------------------------------------------------------------------
+\begin{frame}{Builtin acyclicity checking}
+  \bigskip
+  \begin{itemize}
+  \item<1-> Edge statement
+    \begin{align}\label{eq:edge}
+      \#\mathtt{edge}\; (u,v)\; :\; l_1,\dots,l_n.
+    \end{align}
+  \item <2-> A set $X$ of atoms is an acyclic stable of a logic program $P$, if
+    \begin{enumerate}%\normalsize
+    \item $X$ is a stable model of $P$ and
+    \item the graph
+      \[\hspace{-15pt}
+      (\{u,v\mid X\models l_1,\dots,l_n, \eqref{eq:edge}\in P\},\{(u,v)\mid X\models l_1,\dots,l_n, \eqref{eq:edge}\in P\})
+      \]
+      is acyclic
+    \end{enumerate}
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:
