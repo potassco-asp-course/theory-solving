@@ -1,0 +1,60 @@
+% ----------------------------------------------------------------------
+\begin{frame}[c]{ASP solving process\only<2->{ \alert<2>{modulo theories}}}
+  \begin{center}
+    \small
+    \setlength{\unitlength}{.75pt}
+    \begin{picture}(420,200)(-210,-35)
+      \put(-200,110){{\framebox(80,40){Problem}}}
+      \put(-200,-20){\alert<2->{\framebox(80,40){\shortstack{\textbf<2->{Logic}\\\textbf<2->{Program}}}}}
+      \put(-80,-15){\alert<2->{\framebox(60,30){\textbf<2->{Grounder}}}}
+      \put(  20,-15){\alert<2->{\framebox(60,30){\textbf<2->{Solver}}}}
+      \put( 120,-20){\alert<2->{\framebox(80,40){\shortstack{\textbf<2->{Stable}\\\textbf<2->{Models}}}}}
+      \put( 120,110){\framebox(80,40){Solution}}
+      \put(-120,0){\vector(1,0){40}}
+      \put( -20,0){\vector(1,0){40}}
+      \put(  80,0){\vector(1,0){40}}
+      \put(-160,110){\vector(0,-1){90}}
+      \put( 160, 20){\vector(0, 1){90}}
+      \put(-217, 62.5){{Modeling}}
+      \put( 165, 62.5){{Interpreting}}
+      \alt<3->{\put(   0,-42.5){{\makebox(0,0){Solving}}}}%
+              {\put(   0,-32.5){{\makebox(0,0){Solving}}}}
+      % \only<7>{
+      % \put(-160,-50){\vector(0, 1){30}}
+      % \put( 160,-20){\line(0,-1){30}}
+      % \put(-160,-50){\line(1,0){320}}
+      % \put(   0,-65){\alert<7>{\makebox(0,0){\alert{Elaborating}}}}
+      % }
+      \only<3->{\put(-90,-30){\alert<3>{\framebox(180,60){}}}%
+                \put( 20,0){\vector(-1,0){40}}}
+    \end{picture}
+  \end{center}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[c]{\clingo's approach}
+  \begin{center}
+  \thicklines\small
+  \setlength{\unitlength}{1.25pt}
+    \begin{picture}(280,60)
+    \put(  2, 20){\dashbox(33,30){\small\shortstack{{T-ASP}\\Program}}}
+    \put( 50, 10){\framebox(170,50){}}
+    \put( 60, 20){\framebox(60,30){\gringo\qquad}}
+    \put(150, 20){\framebox(60,30){\clasp\qquad}}
+    \put( 95, 25){\framebox(20,10){\small{T}}}
+    \put(185, 25){\framebox(20,10){\small{T}}}
+    \put(235, 20){\dashbox(33,30){\small\shortstack{{T-}ASP\\Solution}}}
+    \put(120, 35){\vector(1,0){30}}
+    \put( 35, 35){\vector(1,0){25}}
+    \put(210, 35){\vector(1,0){25}}
+    \put(  2, 55){\dashbox(33,30){\small\shortstack{{Theory T}\\Grammar}}}
+    \put(35, +72){\line(1,0){5}}
+    \put(40, +72){\line(0,-1){37}}
+  \end{picture}
+  \end{center}
+\end{frame}
+% ----------------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../asp"
+%%% End:

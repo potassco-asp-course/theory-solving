@@ -1,0 +1,84 @@
+% ----------------------------------------------------------------------
+\begin{frame}{Conflict-driven constraint learning}{modulo theories}
+  \smallskip\scriptsize
+  \newcounter{cddl}
+  \setcounter{cddl}{8}
+  \renewcommand{\thecddl}{\Alph{cddl}}
+  \begin{tabbing}
+   (X)   \= X  \= X  \= X  \= \kill%
+   \refstepcounter{cddl}(\thecddl)\label{fig:cdcl:init}
+         \> \textit{initialize} \` // register theory propagators and initialize watches \\
+         \> \textbf{loop} \\
+         \> \> \textit{propagate} completion, loop, and recorded nogoods
+               \` // deterministically assign literals \\
+         \> \> \textbf{if} no conflict \textbf{then} \\
+         \> \> \> \textbf{if} all variables assigned \textbf{then} \\
+   \setcounter{cddl}{2}%
+   \refstepcounter{cddl}(\thecddl)\label{fig:cdcl:check}
+         \> \> \> \> \textbf{if} some $\delta\in\Delta_T$ is violated for   $T\in\mathbb{T}$ \textbf{then} record $\delta$
+                     \` // theory propagator's check \\
+         \> \> \> \> \textbf{else} \textbf{return} variable assignment
+                   \`// $\mathbb{T}$-stable model found \\
+         \> \> \> \textbf{else} \\
+   \setcounter{cddl}{15}%
+   \refstepcounter{cddl}(\thecddl)\label{fig:cdcl:propagate}
+         \> \> \> \> \textit{propagate} theories $T\in\mathbb{T}$
+                     \`// theory propagators may record theory nogoods \\
+         \> \> \> \> \textbf{if} no nogood recorded \textbf{then} \textit{decide}
+                     \`// non-deterministically assign some literal \\
+         \> \> \textbf{else} \\
+         \> \> \> \textbf{if} top-level conflict \textbf{then} \textbf{return} unsatisfiable \\
+         \> \> \> \textbf{else} \\
+         \> \> \> \> \textit{analyze} \`// resolve conflict and record a conflict constraint \\
+   \setcounter{cddl}{20}%
+   \refstepcounter{cddl}(\thecddl)\label{fig:cdcl:undo}
+         \> \> \> \> \textit{backjump} \`// undo assignments until conflict constraint is unit
+ \end{tabbing}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Propagator interface}
+% \includegraphics[width=\textwidth]{figures/python-interface}
+\structure{\input{figures/python-interface}}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink=1]{The \textit{dot} propagator}
+\begin{lstlisting}
+#script (python)
+
+import sys
+import time
+
+class Propagator:
+    def init(self, init):
+        self.sleep = .1
+        for atom in init.symbolic_atoms:
+            init.add_watch(init.solver_literal(atom.literal))
+
+    def propagate(self, ctl, changes):
+        for l in changes:
+            sys.stdout.write(".")
+            sys.stdout.flush()
+            time.sleep(self.sleep)
+        return True
+
+    def undo(self, solver_id, assign, undo):
+        for l in undo:
+            sys.stdout.write("\b \b")
+            sys.stdout.flush()
+            time.sleep(self.sleep)
+
+def main(prg):
+    prg.register_propagator(Propagator())
+    prg.ground([("base", [])])
+    prg.solve()
+    sys.stdout.write("\n")
+
+#end.
+\end{lstlisting}
+\end{frame}
+% ----------------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../../main"
+%%% End:

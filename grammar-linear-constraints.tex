@@ -1,0 +1,30 @@
+\begin{frame}[fragile,shrink=1]{Linear constraints}
+\begin{lstlisting}
+#theory csp {
+    linear_term {                      show_term {
+      + : 5, unary;                      / : 1, binary, left
+      - : 5, unary;                    };
+      * : 4, binary, left;
+      + : 3, binary, left;
+      - : 3, binary, left              minimize_term {
+    };                                   + : 5, unary;
+                                         - : 5, unary;
+    dom_term {                           * : 4, binary, left;
+      + : 5, unary;                      + : 3, binary, left;
+      - : 5, unary;                      - : 3, binary, left;
+      .. : 1, binary, left               @ : 0, binary, left
+    };                                 };
+
+    &dom/0 : dom_term, {=}, linear_term, any;
+    &sum/0 : linear_term, {<=,=,>=,<,>,!=}, linear_term, any;
+    &show/0 : show_term, directive;
+    &distinct/0 : linear_term, any;
+    &minimize/0 : minimize_term, directive
+}.
+\end{lstlisting}
+\end{frame}
+%
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../asp"
+%%% End:
