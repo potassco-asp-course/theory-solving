@@ -1,0 +1,340 @@
+% ----------------------------------------------------------------------
+\newcommand{\scope}[1]{\ensuremath{\mathit{S}(#1)}}
+\newcommand{\range}[1]{\ensuremath{\mathit{R}(#1)}}
+\newcommand{\project}[2]{\ensuremath{{#1}|_{#2}}}
+\newcommand{\abody}[1]{\project{\mathit{body}(#1)}{\mathcal{A}}} % {\ensuremath{\mathit{abody}(#1)}}
+\newcommand{\cbody}[1]{\project{\mathit{body}(#1)}{\mathcal{C}}} % {\ensuremath{\mathit{cbody}(#1)}}
+\newcommand{\catom}[1]{\project{\atom{#1}}{\mathcal{C}}} % {\ensuremath{\mathit{catom}(#1)}}
+\newcommand{\aatom}[1]{\project{\atom{#1}}{\mathcal{A}}}
+% ----------------------------------------------------------------------
+\begin{frame}{Constraint Satisfaction Problem}
+  \bigskip
+  \begin{itemize}
+  \item<1-> A \alert{constraint satisfaction problem} (CSP) consists of
+    \begin{itemize}
+    \item a set $V$ of variables,
+    \item a set $D$ of domains, and
+    \item a set $C$ of constraints
+    \end{itemize}
+  \item<2-> [] such that
+    \begin{itemize}
+    \item each \alert{variable} $v\in V$ has an associated \alert{domain} $\mathit{dom}(v)\in D$\/;
+    \item a \alert{constraint} $c$ is a pair
+      \(
+      (S,R)
+      \)
+      consisting of a $k$-ary \alert{relation} $R$
+      on a vector $S\subseteq V^k$ of variables,
+      called the \alert{scope} of $R$
+    \end{itemize}
+    \medskip
+  \item<3-> \structure{Note}
+    For $S=(v_1,\dots,v_k)$,
+    we have
+    \(
+    R\subseteq\mathit{dom}(v_1)\times\dots\times\mathit{dom}(v_k)
+    \)
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Example}
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{tabular}[t]{ccccc}
+         &s&e&n&d\\
+        +&m&o&r&e\\
+        \hline
+        m&o&n&e&y
+      \end{tabular}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      Each letter corresponds exactly to one digit and all variables have to be
+      pairwisely distinct
+    \end{column}
+  \end{columns}
+\pause
+\bigskip\bigskip
+\alt<3>
+{% - alternative layer ---
+
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{tabular}[t]{ccccc}
+         &9&5&6&7\\
+        +&1&0&8&5\\
+        \hline
+        1&0&6&5&2
+      \end{tabular}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      The example has exactly one solution
+    \end{column}
+  \end{columns}
+\[
+\{\ s\mapsto9, e\mapsto5, n\mapsto6, d\mapsto7, m\mapsto1, o\mapsto0, r\mapsto8, y\mapsto2\ \}
+\]
+}{% - first layer ---
+\begin{tabbing}
+ \qquad
+ \=$V =\;$\=$\{s,e,n,d,m,o,r,y\}$\\[5pt]
+ \>$D =$\>$\{\domain{v}= \{0,\dots,9\}\mid v \in V\}$\\[5pt]
+ \>$C =$\>$\{\,$\=$(\,$\=$\vec{V},$~~~\=$allDistinct(V)\,)$,\\
+ \>\>\>$($\>$\vec{V},$\>$s\times1000+e\times100+n\times10+d +$\\
+ \>\>\>\>\>$m\times1000+o\times100+r\times10+e ==$\\
+ \>\>\>\>\>$m\times10000+o\times1000+n\times100+e\times10+y),$\\
+ \>\>\>$($\>$(m),$\>$ m == 1)\,\}$\\
+\end{tabbing}}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Constraint satisfaction problem}
+  \bigskip
+  \begin{itemize}
+  \item<1-> \structure{Notation}
+    We use $\scope{c}=S$ and $\range{c}=R$ to access the scope and the relation
+    of a constraint $c=(S,R)$
+    \medskip
+  \item<2-> For an assignment
+    \(
+    A: V\to \bigcup_{v\in V}\domain{v}
+    \)
+    and a constraint $(S,R)$
+    with scope
+    \(
+    S=(v_1,\dots,v_k)
+    \),
+    define
+    \[
+    \mathit{sat}_C(A)
+    =
+    \{
+    c\in C \mid A(\scope{c}) \in \range{c}
+    \}
+    \]
+    where
+    \(
+    A(S)
+    =
+    (A(v_1),\dots,A(v_k))
+    \)
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Constraint Answer Set Programming}
+  \bigskip
+  \begin{itemize}
+  \item<1-> A \alert{constraint logic program}~$P$ is a logic program over an extended
+    alphabet $\mathcal{A}\cup\mathcal{C}$
+    where
+    \begin{itemize}
+    \item $\mathcal{A}$ is a set of \alert{regular atoms} and
+    \item $\mathcal{C}$ is a set of \alert{constraint atoms},
+    \end{itemize}
+    such that $\head{r}\in\mathcal{A}$ for each $r\in P$
+    \medskip
+  \item<2-> Given a set of literals~$B$ and some set~$\mathcal{B}$ of atoms,
+    we define
+    \\\(\quad
+    \project{B}{\mathcal{B}}
+    =
+    (\poslits{B}\cap\mathcal{B})
+    \cup
+    \{\neg a\mid a\in\neglits{B}\cap\mathcal{B}\}
+    \)
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Constraint Answer Set Programming}
+  \bigskip
+  \begin{itemize}
+  \item<1-> We identify constraint atoms with constraints via a function
+    \[
+    \gamma: \mathcal{C}\to C
+    \]
+  \item<1-> Furthermore,
+    \(
+    \gamma(Y)=\{\gamma(c)\mid c\in Y\}
+    \)
+    for any $Y\subseteq\mathcal{C}$
+    \medskip
+  \item<2-> \structure{Note}
+    Unlike regular atoms $\mathcal{A}$, constraint atoms~$\mathcal{C}$
+    are not subject to the unique names assumption, eg.\
+    \begin{itemize}
+    \item[] $\gamma(x<y) \ = \ \gamma(((-y-1)\leq -(x+1))\wedge (x\neq y))$
+    \end{itemize}
+    \medskip
+  \item<3-> A constraint logic program $P$ is associated with a CSP\\
+    as follows
+    \begin{itemize}
+    \item
+      \(
+      C[P]=\gamma(\atom{P}\cap\mathcal{C}) % (\catom{P})
+      \),
+    \item $V[P]$ is obtained from the constraint scopes in $C[P]$,
+    \item $D[P]$ is provided by a declaration
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Constraint Answer Set Programming}
+  \begin{itemize}
+  \item<1-> Let~$P$ be a constraint logic program over $\mathcal{A}\cup\mathcal{C}$ and \\
+    let $A: V[P]\to D[P]$ be an assignment,
+
+  \item<1-> [] define the \alert{constraint reduct} of as $P$ wrt $A$ as follows
+    \[
+    \begin{array}{rcl}
+        P^A
+        &=&
+        \{\
+        \head{r}\leftarrow\abody{r}
+        \mid r\in P,\\
+      &&\qquad\qquad
+      \gamma(\poslits{\cbody{r}})
+      \subseteq\mathit{sat}_{C[P]}(A)
+      ,\\
+      &&\qquad\qquad
+      \gamma(\neglits{\cbody{r}})
+      \,\cap\,
+      \mathit{sat}_{C[P]}(A)
+      =
+      \emptyset
+      \ \}
+    \end{array}
+    \]
+  \item<2-> A set $\alert<3>{X}\subseteq\mathcal{A}$ of (regular) atoms
+    is a \alert{constraint answer set} of~$P$ \alert<3>{wrt~$A$}, if
+    $X$ is an stable model of~$P^A$.\pause%\pause
+  \item<3->  \structure{Note}
+    That is, if $X$ is the $\subseteq$-smallest model of $(P^A)^X$
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Some Constraint Answer Set Programming (CASP) systems}
+  \bigskip
+  \begin{itemize}
+  \item<1-> \alert{\adsolver}
+    \begin{itemize}
+    \item<1-> extension of ASP solver \smodels
+    \end{itemize}
+    \bigskip
+  \item<2-> \alert{\clingcon}
+    \begin{itemize}
+    \item<2-> extension of ASP system \clingo\ \ (viz.\ \gringo\ and \clasp)
+    \item<2-> lazy approach
+    \end{itemize}
+  \item<3-> \alert{\aspartame}
+    \begin{itemize}
+    \item<3-> translational approach \ (independent of ASP system)
+    \item<2-> eager approach
+    \end{itemize}
+    \bigskip
+  \item<4->
+    \alert{\aspmt},
+    \alert{\dlvhex},
+    \alert{\ezcsp},
+    \alert{\gasp},
+    \alert{\inca},
+    \dots
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{\aspartame's eager approach}
+  \bigskip
+  \begin{center}
+  \thicklines
+  \setlength{\unitlength}{1.25pt}
+  \scriptsize
+  \begin{picture}(280,85)(0,-10)
+    \only<1>{%
+    \put( 6, 20){\dashbox(24,24){\shortstack{CSP\\Instance}}}
+    \put( 40, 20){\framebox(50,24){\sugar\quad}}
+    \put( 80, 20){\dashbox(10,24){\it\shortstack{A\\S\\P}}}}
+    \put(100, 20){\dashbox(20,24){\shortstack{ASP\\Facts}}}
+    \put( 80,-10){\dashbox(40,24){\shortstack{ASP\\Encoding\only<3->{$^*$}}}}
+    \put(130, 20){\framebox(50,24){\gringo}}
+    \put(190, 20){\framebox(50,24){\clasp}}
+    \put(250, 20){\dashbox(24,24){\shortstack{\alt<2->{CASP}{CSP}\\Solution}}}
+    \only<1>{\put( 30, 32){\vector(1,0){10}}}
+    \only<1>{\put( 90, 32){\vector(1,0){10}}}
+    \put(120, 32){\vector(1,0){10}}
+    \put(180, 32){\vector(1,0){10}}
+    \put(240, 32){\vector(1,0){10}}
+    \put(120, +2){\line(1,0){4}}
+    \put(124, +2){\line(0,1){30}}
+    \pause[2]
+    \put( 80, 50){\dashbox(40,24){\shortstack{CASP\\Program}}}
+    \put(120, +62){\line(1,0){4}}
+    \put(124, +32){\line(0,1){30}}
+  \end{picture}
+\end{center}
+\vfill
+\begin{itemize}
+\item<3-> []$^*$ based on order-encoding for CSPs
+\end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[c]{\clingcon's lazy approach}
+  \begin{center}
+  \thicklines
+  \setlength{\unitlength}{1.25pt}
+    \begin{picture}(280,60)
+    \put(  2, 20){\dashbox(33,30){\small\shortstack{CASP\\Program}}}
+    \put( 50, 10){\framebox(170,50){}}
+    \put( 60, 20){\framebox(60,30){\gringo\qquad}}
+    \put(150, 20){\framebox(60,30){\clasp\qquad}}
+    \put( 95, 25){\framebox(20,10){\small\textcolor<3>{yellow}{CSP}}}
+    \put(185, 25){\framebox(20,10){\small CSP}}
+    \put(235, 20){\dashbox(33,30){\small\shortstack{CASP\\Solution}}}
+    \put(120, 35){\vector(1,0){30}}
+    \put( 35, 35){\vector(1,0){25}}
+    \put(210, 35){\vector(1,0){25}}
+    \only<7->{\put(  2, 55){\dashbox(33,30){\small\shortstack{CSP\\Grammar}}}
+    \put(35, +72){\line(1,0){5}}
+    \put(40, +72){\line(0,-1){37}}}
+    \end{picture}
+  \end{center}
+  \begin{minipage}[t]{0.49\linewidth}
+    \begin{itemize}
+    \item<2-> \clingcon\ 1\only<5->{+2}
+      \begin{itemize}
+      \item<3-> language extension
+      \item<4-> propagation via \gecode\
+      \item<5-> conflict minimization
+      \end{itemize}
+    \end{itemize}
+  \end{minipage}
+  \begin{minipage}[t]{0.49\linewidth}
+    \begin{itemize}
+    \item<6-> \clingcon\ 3
+      \begin{itemize}
+      \item<7-> language specification
+      \item<8-> lazy propagation$^*$
+      \end{itemize}
+    \end{itemize}
+  \end{minipage}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{\clingcon\alt<2->{ instantiates \clingo}{'s approach}}
+  \bigskip\smallskip
+  \begin{center}
+  \thicklines
+  \setlength{\unitlength}{1.25pt}
+    \begin{picture}(280,60)
+    \put(  2, 20){\dashbox(33,30){\small\shortstack{\alt<2->{T-ASP}{CASP}\\Program}}}
+    \put( 50, 10){\framebox(170,50){}}
+    \put( 60, 20){\framebox(60,30){\gringo\qquad}}
+    \put(150, 20){\framebox(60,30){\clasp\qquad}}
+    \put( 95, 25){\framebox(20,10){\small\alt<2->{T}{CSP}}}
+    \put(185, 25){\framebox(20,10){\small\alt<2->{T}{CSP}}}
+    \put(235, 20){\dashbox(33,30){\small\shortstack{\alt<2->{T-}{C}ASP\\Solution}}}
+    \put(120, 35){\vector(1,0){30}}
+    \put( 35, 35){\vector(1,0){25}}
+    \put(210, 35){\vector(1,0){25}}
+    \put(  2, 55){\dashbox(33,30){\small\shortstack{\alt<2->{Theory T}{CSP}\\Grammar}}}
+    \put(35, +72){\line(1,0){5}}
+    \put(40, +72){\line(0,-1){37}}
+  \end{picture}
+  \end{center}
+\end{frame}
+% ----------------------------------------------------------------------
