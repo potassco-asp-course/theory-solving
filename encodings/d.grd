@@ -1,0 +1,15 @@
+task(1).
+task(2).
+
+duration(1,200).
+duration(2,400).
+
+&dom {1..1000} = beg(1).
+&dom {1..1000} = end(1).
+&dom {1..1000} = beg(2).
+&dom {1..1000} = end(2).
+
+&diff{end(1)-beg(1)}<=200.
+&diff{end(2)-beg(2)}<=400.
+
+&show{ beg/1; end/1 }.
