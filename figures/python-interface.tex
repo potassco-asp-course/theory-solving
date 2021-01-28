@@ -1,0 +1,54 @@
+\tikzumlset{fill class=none,fill package=none,text=normal text.fg,draw=normal text.fg,font=\scriptsize}
+\begin{tikzpicture}[every node/.style={inner sep=0.3mm,outer sep=0}]
+  \begin{umlpackage}[x=0,y=0]{clingo}
+    \umlclass[x=-3.1,y=0]{SymbolicAtom}{
+      + symbol \\
+      + literal
+      }{}
+    \umlclass[x=3.0,y=0]{TheoryAtom}{
+      + name \\
+      + elements \\
+      + guard \\
+      + literal
+    }{}
+    \umlclass[x=0,y=0]{PropagateInit}{
+      + num\_threads \\
+      + symbolic\_atoms \\
+      + theory\_atoms
+    }{
+      + add\_watch(lit) \\
+      + solver\_literal(lit)
+    }
+    \umlclass[x=-1.2,y=-3,type=interface]{Propagator}{}{
+      \umlvirt{+ init(init)} \\
+      \umlvirt{+ propagate(control, changes)} \\
+      \umlvirt{+ undo(thread\_id, assignment, changes)} \\
+      \umlvirt{+ check(control)}
+    }
+    \umlclass[x=4.4,y=-3]{PropagateControl}{
+      + thread\_id \\
+      + assignment
+    }{
+      + add\_nogood(nogood, tag, lock) \\
+      + propagate()
+    }
+    \umlclass[x=5.8,y=0]{Assignment}{
+      + decision\_level \\
+      + has\_conflict
+    }{
+      + value(lit) \\
+      + level(lit) \\
+      + ...
+    }
+    \umlassoc[geometry=|-|]{PropagateControl}{Assignment}
+    \umlassoc[]{Propagator}{PropagateControl}
+    \umlassoc[geometry=|-|]{Propagator}{PropagateInit}
+    \umlassoc[]{PropagateInit}{SymbolicAtom}
+    \umlassoc[]{PropagateInit}{TheoryAtom}
+  \end{umlpackage}
+\end{tikzpicture}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "asp"
+%%% End:
