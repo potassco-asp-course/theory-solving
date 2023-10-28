@@ -1,0 +1,129 @@
+% ----------------------------------------------------------------------
+\begin{frame}{Some Constraint Answer Set Programming (CASP) systems}
+  \bigskip
+  \begin{itemize}
+  \item<1-> \alert{\adsolver}
+    \begin{itemize}
+    \item<1-> extension of ASP solver \smodels
+    \end{itemize}
+    \bigskip
+  \item<2-> \alert{\clingcon}
+    \begin{itemize}
+    \item<2-> extension of ASP system \clingo\ \ (viz.\ \gringo\ and \clasp)
+    \item<2-> lazy approach
+    \end{itemize}
+  \item<3-> \alert{\aspartame}
+    \begin{itemize}
+    \item<3-> translational approach \ (independent of ASP system)
+    \item<2-> eager approach
+    \end{itemize}
+    \bigskip
+  \item<4->
+    \alert{\aspmt},
+    \alert{\dlvhex},
+    \alert{\ezcsp},
+    \alert{\gasp},
+    \alert{\inca},
+    \dots
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{\aspartame's eager approach}
+  \bigskip
+  \begin{center}
+  \thicklines
+  \setlength{\unitlength}{1.25pt}
+  \scriptsize
+  \begin{picture}(280,85)(0,-10)
+    \only<1>{%
+    \put( 6, 20){\dashbox(24,24){\shortstack{CSP\\Instance}}}
+    \put( 40, 20){\framebox(50,24){\sugar\quad}}
+    \put( 80, 20){\dashbox(10,24){\it\shortstack{A\\S\\P}}}}
+    \put(100, 20){\dashbox(20,24){\shortstack{ASP\\Facts}}}
+    \put( 80,-10){\dashbox(40,24){\shortstack{ASP\\Encoding\only<3->{$^*$}}}}
+    \put(130, 20){\framebox(50,24){\gringo}}
+    \put(190, 20){\framebox(50,24){\clasp}}
+    \put(250, 20){\dashbox(24,24){\shortstack{\alt<2->{CASP}{CSP}\\Solution}}}
+    \only<1>{\put( 30, 32){\vector(1,0){10}}}
+    \only<1>{\put( 90, 32){\vector(1,0){10}}}
+    \put(120, 32){\vector(1,0){10}}
+    \put(180, 32){\vector(1,0){10}}
+    \put(240, 32){\vector(1,0){10}}
+    \put(120, +2){\line(1,0){4}}
+    \put(124, +2){\line(0,1){30}}
+    \pause[2]
+    \put( 80, 50){\dashbox(40,24){\shortstack{CASP\\Program}}}
+    \put(120, +62){\line(1,0){4}}
+    \put(124, +32){\line(0,1){30}}
+  \end{picture}
+\end{center}
+\vfill
+\begin{itemize}
+\item<3-> []$^*$ based on order-encoding for CSPs
+\end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[c]{\clingcon's lazy approach}
+  \begin{center}
+  \thicklines
+  \setlength{\unitlength}{1.25pt}
+    \begin{picture}(280,60)
+    \put(  2, 20){\dashbox(33,30){\small\shortstack{CASP\\Program}}}
+    \put( 50, 10){\framebox(170,50){}}
+    \put( 60, 20){\framebox(60,30){\gringo\qquad}}
+    \put(150, 20){\framebox(60,30){\clasp\qquad}}
+    \put( 95, 25){\framebox(20,10){\small\textcolor<3>{yellow}{CSP}}}
+    \put(185, 25){\framebox(20,10){\small CSP}}
+    \put(235, 20){\dashbox(33,30){\small\shortstack{CASP\\Solution}}}
+    \put(120, 35){\vector(1,0){30}}
+    \put( 35, 35){\vector(1,0){25}}
+    \put(210, 35){\vector(1,0){25}}
+    \only<7->{\put(  2, 55){\dashbox(33,30){\small\shortstack{CSP\\Grammar}}}
+    \put(35, +72){\line(1,0){5}}
+    \put(40, +72){\line(0,-1){37}}}
+    \end{picture}
+  \end{center}
+  \begin{minipage}[t]{0.49\linewidth}
+    \begin{itemize}
+    \item<2-> \clingcon\ 1\only<5->{+2}
+      \begin{itemize}
+      \item<3-> language extension
+      \item<4-> propagation via \gecode\
+      \item<5-> conflict minimization
+      \end{itemize}
+    \end{itemize}
+  \end{minipage}
+  \begin{minipage}[t]{0.49\linewidth}
+    \begin{itemize}
+    \item<6-> \clingcon\ 3
+      \begin{itemize}
+      \item<7-> language specification
+      \item<8-> lazy propagation$^*$
+      \end{itemize}
+    \end{itemize}
+  \end{minipage}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{\clingcon\alt<2->{ instantiates \clingo}{'s approach}}
+  \bigskip\smallskip
+  \begin{center}
+  \thicklines
+  \setlength{\unitlength}{1.25pt}
+    \begin{picture}(280,60)
+    \put(  2, 20){\dashbox(33,30){\small\shortstack{\alt<2->{T-ASP}{CASP}\\Program}}}
+    \put( 50, 10){\framebox(170,50){}}
+    \put( 60, 20){\framebox(60,30){\gringo\qquad}}
+    \put(150, 20){\framebox(60,30){\clasp\qquad}}
+    \put( 95, 25){\framebox(20,10){\small\alt<2->{T}{CSP}}}
+    \put(185, 25){\framebox(20,10){\small\alt<2->{T}{CSP}}}
+    \put(235, 20){\dashbox(33,30){\small\shortstack{\alt<2->{T-}{C}ASP\\Solution}}}
+    \put(120, 35){\vector(1,0){30}}
+    \put( 35, 35){\vector(1,0){25}}
+    \put(210, 35){\vector(1,0){25}}
+    \put(  2, 55){\dashbox(33,30){\small\shortstack{\alt<2->{Theory T}{CSP}\\Grammar}}}
+    \put(35, +72){\line(1,0){5}}
+    \put(40, +72){\line(0,-1){37}}
+  \end{picture}
+  \end{center}
+\end{frame}
+% ----------------------------------------------------------------------

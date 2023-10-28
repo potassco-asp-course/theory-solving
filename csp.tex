@@ -1,0 +1,80 @@
+% ----------------------------------------------------------------------
+\begin{frame}{Constraint Satisfaction Problem}
+  \bigskip
+  \begin{itemize}
+  \item<1-> A \alert{constraint satisfaction problem} (CSP) consists of
+    \begin{itemize}
+    \item a set $V$ of variables,
+    \item a set $D$ of domains, and
+    \item a set $C$ of constraints
+    \end{itemize}
+  \item<2-> [] such that
+    \begin{itemize}
+    \item each \alert{variable} $v\in V$ has an associated \alert{domain} $\mathit{dom}(v)\in D$\/;
+    \item a \alert{constraint} $c$ is a pair
+      \(
+      (S,R)
+      \)
+      consisting of a $k$-ary \alert{relation} $R$
+      on a vector $S\subseteq V^k$ of variables,
+      called the \alert{scope} of $R$
+    \end{itemize}
+    \medskip
+  \item<3-> \structure{Note}
+    For $S=(v_1,\dots,v_k)$,
+    we have
+    \(
+    R\subseteq\mathit{dom}(v_1)\times\dots\times\mathit{dom}(v_k)
+    \)
+  \end{itemize}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}{Example}
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{tabular}[t]{ccccc}
+         &s&e&n&d\\
+        +&m&o&r&e\\
+        \hline
+        m&o&n&e&y
+      \end{tabular}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      Each letter corresponds exactly to one digit and all variables have to be
+      pairwisely distinct
+    \end{column}
+  \end{columns}
+\pause
+\bigskip\bigskip
+\alt<3>
+{% - alternative layer ---
+
+  \begin{columns}
+    \begin{column}{.35\textwidth}
+      \begin{tabular}[t]{ccccc}
+         &9&5&6&7\\
+        +&1&0&8&5\\
+        \hline
+        1&0&6&5&2
+      \end{tabular}
+    \end{column}
+    \begin{column}{.35\textwidth}
+      The example has exactly one solution
+    \end{column}
+  \end{columns}
+\[
+\{\ s\mapsto9, e\mapsto5, n\mapsto6, d\mapsto7, m\mapsto1, o\mapsto0, r\mapsto8, y\mapsto2\ \}
+\]
+}{% - first layer ---
+\begin{tabbing}
+ \qquad
+ \=$V =\;$\=$\{s,e,n,d,m,o,r,y\}$\\[5pt]
+ \>$D =$\>$\{\domain{v}= \{0,\dots,9\}\mid v \in V\}$\\[5pt]
+ \>$C =$\>$\{\,$\=$(\,$\=$\vec{V},$~~~\=$allDistinct(V)\,)$,\\
+ \>\>\>$($\>$\vec{V},$\>$s\times1000+e\times100+n\times10+d +$\\
+ \>\>\>\>\>$m\times1000+o\times100+r\times10+e =$\\
+ \>\>\>\>\>$m\times10000+o\times1000+n\times100+e\times10+y),$\\
+ \>\>\>$($\>$(m),$\>$ m = 1)\,\}$\\
+\end{tabbing}}
+\end{frame}
+% ----------------------------------------------------------------------
