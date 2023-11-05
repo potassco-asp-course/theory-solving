@@ -36,6 +36,32 @@
 % ----------------------------------------------------------------------
 \begin{frame}[fragile,shrink=1]{send+more=money}
 \begin{lstlisting}
+                        sum(4,m).
+arg(1,3,s). arg(2,3,m). sum(3,o).
+arg(1,2,e). arg(2,2,o). sum(2,n).
+arg(1,1,n). arg(2,1,r). sum(1,e).
+arg(1,0,d). arg(2,0,e). sum(0,y).
+
+not_null(m).
+
+digit(D) :- arg(_,_,D).
+digit(D) :-   sum(_,D).
+
+&dom { 0..9 } = D :- digit(D).
+
+&sum {  M*D : arg(I,N,D), M=10**N;
+       -M*D :   sum(N,D), M=10**N  } = 0.
+
+&sum { D } > 0 :- not_null(D).
+
+&distinct { D : digit(D) }.
+
+&show { D : digit(D) }.
+\end{lstlisting}
+\end{frame}
+% ----------------------------------------------------------------------
+\begin{frame}[fragile,shrink=1]{send+more=money}
+\begin{lstlisting}
 digit(1,3,s).   digit(2,3,m).   digit(sum,4,m).
 digit(1,2,e).   digit(2,2,o).   digit(sum,3,o).
 digit(1,1,n).   digit(2,1,r).   digit(sum,2,n).
