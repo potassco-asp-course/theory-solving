@@ -7,8 +7,6 @@ arg(1,2,e). arg(2,2,o). sum(2,n).
 arg(1,1,n). arg(2,1,r). sum(1,e).
 arg(1,0,d). arg(2,0,e). sum(0,y).
 
-not_null(m).
-
 digit(D) :- arg(_,_,D).
 digit(D) :-   sum(_,D).
 
@@ -17,7 +15,7 @@ digit(D) :-   sum(_,D).
 &sum {  M*D : arg(I,N,D), M=10**N;
        -M*D :   sum(N,D), M=10**N  } = 0.
 
-&sum { D } > 0 :- not_null(D).
+&sum { E } > 0 :- (_,E) = #max { (N,D): sum(N,D) }.
 
 &distinct { D : digit(D) }.
 
