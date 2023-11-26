@@ -7,12 +7,15 @@
       \#\mathtt{edge}\; (u,v)\; :\; l_1,\dots,l_n.
     \end{align}
   \item <2-> A set $X$ of atoms is an acyclic stable of a logic program $P$, if
-    \begin{enumerate}%\normalsize
+    \smallskip
+    \begin{enumerate}\normalsize
     \item $X$ is a stable model of $P$ and
+      \smallskip
     \item the graph
+      {\small
       \[\hspace{-15pt}
       (\{u,v\mid X\models l_1,\dots,l_n, \eqref{eq:edge}\in P\},\{(u,v)\mid X\models l_1,\dots,l_n, \eqref{eq:edge}\in P\})
-      \]
+      \]}%
       is acyclic
     \end{enumerate}
   \end{itemize}
