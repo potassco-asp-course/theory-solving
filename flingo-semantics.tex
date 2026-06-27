@@ -1,0 +1,89 @@
+% --------------------------------------------------------------------------------
+\begin{frame}[fragile]{\only<1>{\clingcon}\only<2-3>{\flingo}\only<4->{Denotational} semantics}{summation constraints\only<4->{ and more}}
+\begin{align*}
+  \den{\mathtt{\&sum}\{t_1 ; \dots ; t_n\} \prec s} &=\alt<2->{%
+                                                      \big\{ v \in \mathcal{V} \mid
+                                                      \alert<3>{\dot{v}}(t_i) \in \mathbb{Z}, % \text{ for } 1\leq i \leq n,
+                                                      \textstyle\sum_{1\leq i \leq n} \alert<3>{\dot{v}}(t_i) \prec v(s)
+                                                      \big\}}%
+                                                      {%
+                                                      \big\{ v \in \mathcal{V} \mid
+                                                      \alert<3>{v}(t_i) \in \mathbb{Z}, % \text{ for } 1\leq i \leq n,
+                                                      \textstyle\sum_{1\leq i \leq n} \alert<3>{v}(t_i) \prec v(s)
+                                                      \big\}}
+  \\
+  \only<2->{\den{\mathtt{\&sus}\{t_1 ; \dots ; t_n\} \prec s}&=
+                                                               \big\{ v \in \mathcal{V} \mid
+                                                               \alert<3>{v}(t_i) \in \mathbb{Z}, % \text{ for } 1\leq i \leq n,
+                                                               \textstyle\sum_{1\leq i \leq n} \alert<3>{v}(t_i) \prec v(s)
+                                                               \big\}}
+  \\[12pt]
+  \uncover<4->{\den{\mathtt{\&df}(x)}&=  \big\{ v \in \mathcal{V} \mid v(x)\neq\Undefined \big\} \\}
+  \uncover<4->{\den{\mathtt{\&int}(x)}&= \{ v \in \mathcal{V} \mid v(x) \in \mathbb{Z} \}}
+\end{align*}
+% \pause[2]
+\begin{align*}
+  v(n)     &= n
+  &
+  \alert<3>{v}(n * x) &= \begin{cases} n * v(x)   &\text{if } v(x) \in \mathbb{Z} \\
+                 \alert<3>{\Undefined} &\text{otherwise}
+               \end{cases}
+  &
+  \only<2->{\alert<3>{\dot{v}}(t) &=
+               \begin{cases}
+                 v(t) &\text{if } v(t) \in \mathbb{Z} \\
+                 \alert<3>{0}    &\text{otherwise}
+               \end{cases}}
+\end{align*}
+\end{frame}
+% --------------------------------------------------------------------------------
+\begin{frame}{Example}
+  \medskip
+  \begin{itemize}
+  \item<1-> \structure{CASP program}
+    \par\smallskip
+    \begin{tabular}{l}
+      \texttt{\{ a \}.}
+      \\
+      \texttt{\&sum\{ x \} > 7 :- a.}
+    \end{tabular}
+  \end{itemize}
+  \medskip
+  \begin{columns}
+    \begin{column}<2->[t]{.48\textwidth}
+      \begin{itemize}
+      \item<2-> \structure{\clingcon\ semantics}
+        \par\smallskip
+        \begin{tabular}[t]{ll}
+          {$\alt<3>{(a=\boldsymbol{t})}{a}\vee\neg\alt<3>{(a=\boldsymbol{t})}{a}$}
+          \\
+          {$\alt<3>{(a=\boldsymbol{t})}{a}\to{x>7}$}
+          \\
+          $\mathtt{\&df}(a)\to\alt<3>{(a=\boldsymbol{t})}{a}$
+          \\
+          $\mathtt{\&int}(x)$
+        \end{tabular}
+      \end{itemize}
+    \end{column}
+    \begin{column}<4->[t]{.48\textwidth}
+      \begin{itemize}
+      \item \structure{\flingo\ semantics}
+        \par\smallskip
+        \begin{tabular}[t]{ll}
+          {$a\vee\neg a$}
+          \\
+          {$a\to{x>7}$}
+          \\
+          $\mathtt{\&df}(a) \to a$
+          \\
+          $\mathtt{\&df}(x) \to \mathtt{\&int}(x)$
+        \end{tabular}
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+%
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "slides"
+%%% End:

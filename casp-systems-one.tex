@@ -1,0 +1,30 @@
+\begin{frame}{CASP = ASP + CP}{Constraint Answer Set Programming}
+  \begin{itemize}
+  \item \clingo\ extensions with linear constraints
+    \begin{itemize}\normalsize
+    \item \clingcon\  --- linear constraints over integers
+    \item \clingodl\  --- difference constraints
+    \item \clingolp\  --- linear constraints over floats
+    \item \clingolpx\ --- linear constraints over rationals
+    \end{itemize}
+    \smallskip
+  \item<only@-2>[] $\bm\hookrightarrow$ numeric variables are not grounded
+    \medskip
+    \begin{itemize}\normalsize\em
+    \item<only@2>[] \alert{>\,What about defaults\,? Undefined variables\,?}
+    \item<only@2>[] \alert{<\,Nope, numeric variables are monotonic\,!}
+    \end{itemize}
+  \item<only@3-> \clingo\ extensions with linear constraints, \alert<4-5>{non-monotonically}
+    \begin{itemize}\normalsize
+    \item \lctocasp\ --- linear constraints over integers
+    \item \flingo\   --- linear constraints over integers
+      \begin{itemize}\normalsize
+      \item values of variables must be derived and may be undefined
+      \item defaults, assignments, definedness check
+      \item non-strict and strict aggregates
+      \end{itemize}
+    \end{itemize}
+  \item<only@4-5>[]\alert{\em >\,What does this mean\,?}
+  \item<only@5>[]  \alert{\em <\,For semantics, start here, go there, and find an equilibrium\,!}
+  \end{itemize}
+\end{frame}

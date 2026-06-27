@@ -1,0 +1,42 @@
+\begin{frame}{Foundedness in CASP systems}
+  \begin{itemize}
+  \item<1-> \structure{Example}
+    \par\smallskip
+    \begin{columns}
+      \begin{column}<1->[t]{.4\textwidth}
+        \begin{tabular}[t]{l}
+          \texttt{\{ a \}.}
+          \\
+          \texttt{\alt<2->{\&sum\{ x \} > 7}{\textrm{``}x > 7\textrm{''}} :- a.}
+        \end{tabular}%
+      \end{column}
+      \begin{column}<6->[t]{.4\textwidth}
+        \begin{tabular}[t]{ll}
+          \alert{$a\vee\neg a$} &\only<6->{+ \alert{Axioms}}
+          \\
+          \alert{$a\to{x>7}$}   &
+        \end{tabular}%
+      \end{column}
+    \end{columns}
+    \medskip
+  \item<3-> \alert<6,9>{\clingcon} produces infinitely many solutions:
+    \begin{itemize}
+    \item $a$ is true  and $x$ takes all values greater than 7
+    \item $a$ is false and $x$ takes all possible integer values
+    \end{itemize}
+  \item<4-> \alert<6,9>{\flingo} yields infinitely many solutions:
+    \begin{itemize}
+    \item $a$ is true and $x$ takes all values greater than 7
+    \item $a$ is false and $x$ is undefined
+    \end{itemize}
+  \item<5-> \alert<7>{\clingodl} obtains only two solutions:
+    \begin{itemize}
+    \item $a$ is true  and $x$ is $8$ and
+    \item $a$ is false and $x$ is undefined
+    \end{itemize}
+    \smallskip
+  \item<6->[\mbox{\makebox[0pt]{\only<6->{\alert{$\bm\hookrightarrow$}}}}] \quad
+    \only<6->{\alert{\only<7-8>{Bound-founded }Logic of Here-and-There\only<-6,9>{ with Constraints}
+        (\alt<7-8>{\only<8>{``Peter Stuckey's }\HTB\only<8>{''}}{\HTC})}}
+  \end{itemize}
+\end{frame}

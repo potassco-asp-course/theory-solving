@@ -1,0 +1,21 @@
+% --------------------------------------------------------------------------------
+\begin{frame}[fragile]{Example}{Configuration}
+\bigskip\small
+\begin{semiverbatim}
+price(frame,15).
+default_range(1,2).
+select(frame).                  \{ select(bag) \}.
+
+&sus\{ V \} = \alert<2>{price(P)}    :- select(P), price(P,V).
+&in\{ L..U \} =: \alert<3>{price(P)} :- select(P), default_range(L,U),
+                not &sus\{ \alert<3>{price(P)} \} < L, not &sus\{ \alert<3>{price(P)} \} > U.
+
+&sus\{ \alert<4>{price(P)} : select(P) \} =: \alert<4>{price(total)}.
+\end{semiverbatim}
+\end{frame}
+% --------------------------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "slides"
+%%% End:
