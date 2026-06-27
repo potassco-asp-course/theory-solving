@@ -1,0 +1,19 @@
+% --------------------------------------------------------------------------------
+\begin{frame}[fragile]{Example}{Tariffs}
+\bigskip\small
+\begin{semiverbatim}
+&sum\{ tariff(cars,ca) \} = 25.
+&sum\{ \alert<2>{tariff(P,eu)} \} = 15 :- sales(P,eu,_),
+                             not &sus\{ \alert<2>{tariff(P,eu)} \} != 15.
+&sum\{ tariff(steel,eu) \} = 0.
+&sum\{ tariff(aircraft,eu) \} = 25.
+
+&sum\{ Y*\alert<3>{tariff(P,C)},P,C : sales(P,C,X), Y=X/100 \} =: \alert<3>{taxincome}.
+\end{semiverbatim}
+\end{frame}
+% --------------------------------------------------------------------------------
+%
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "slides"
+%%% End:
