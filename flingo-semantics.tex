@@ -37,51 +37,6 @@
 \end{align*}
 \end{frame}
 % --------------------------------------------------------------------------------
-\begin{frame}{Example}
-  \medskip
-  \begin{itemize}
-  \item<1-> \structure{CASP program}
-    \par\smallskip
-    \begin{tabular}{l}
-      \texttt{\{ a \}.}
-      \\
-      \texttt{\&sum\{ x \} > 7 :- a.}
-    \end{tabular}
-  \end{itemize}
-  \medskip
-  \begin{columns}
-    \begin{column}<2->[t]{.48\textwidth}
-      \begin{itemize}
-      \item<2-> \structure{\clingcon\ semantics}
-        \par\smallskip
-        \begin{tabular}[t]{ll}
-          {$\alt<3>{(a=\boldsymbol{t})}{a}\vee\neg\alt<3>{(a=\boldsymbol{t})}{a}$}
-          \\
-          {$\alt<3>{(a=\boldsymbol{t})}{a}\to{x>7}$}
-          \\
-          $\mathtt{\&df}(a)\to\alt<3>{(a=\boldsymbol{t})}{a}$
-          \\
-          $\mathtt{\&int}(x)$
-        \end{tabular}
-      \end{itemize}
-    \end{column}
-    \begin{column}<4->[t]{.48\textwidth}
-      \begin{itemize}
-      \item \structure{\flingo\ semantics}
-        \par\smallskip
-        \begin{tabular}[t]{ll}
-          {$a\vee\neg a$}
-          \\
-          {$a\to{x>7}$}
-          \\
-          $\mathtt{\&df}(a) \to a$
-          \\
-          $\mathtt{\&df}(x) \to \mathtt{\&int}(x)$
-        \end{tabular}
-      \end{itemize}
-    \end{column}
-  \end{columns}
-\end{frame}
 %
 %%% Local Variables:
 %%% mode: LaTeX
